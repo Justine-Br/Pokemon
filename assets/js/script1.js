@@ -72,7 +72,7 @@ document.querySelector("#php").addEventListener("click", (event) => {
     event.preventDefault(); //Empêchement du comportement par défaut du formulaire (rechargement de la page lors de la soumission du formulaire)
     let valeurPokemon = document.querySelector("#select-pokemon").value; // Récupération de la valeur sélectionnée dans l'élément de sélection
 
-    // Déclenchement de la fonction
+    // Déclenchement de la fonction,  la valeur sélectionnée dans l'élément de sélection "select-pokemon" est passée comme argument à getViaPHP.
     getViaPHP(valeurPokemon);
 
 })

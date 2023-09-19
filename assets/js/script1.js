@@ -8,7 +8,7 @@ fetch("https://pokebuildapi.fr/api/v1/pokemon/")
 
     allPokemon.sort();
     // Affichage des données dans la console
-    console.log(allPokemon);
+    // console.log(allPokemon);
 
     // Parcours de tout les Pokémon contenus dans "allPokemon"
     allPokemon.forEach(unPokemon => {
@@ -21,16 +21,21 @@ fetch("https://pokebuildapi.fr/api/v1/pokemon/")
     })
 })
 
-// Ajout d'un écouteur d'événement sur le bouton type "submit" Lorsque le bouton est cliqué, la fonction fléchée est appelée
-document.querySelector("input[type='submit']").addEventListener("click", (event) => {
-    event.preventDefault(); //Empêchement du comportement par défaut du formulaire (rechargement de la page lors de la soumission du formulaire)
-    let valeurPokemon = document.querySelector("#select-pokemon").value; // Récupération de la valeur sélectionnée dans l'élément de sélection
+// Définission de la fonction "getViaPHP(valeurPokemon", elle prend le nom du Pokémon sélectionné en tant que paramètre
+function getViaPHP(valeurPokemon) {
 
     // Deuxième requête effectuée en utilisant la variable "valeurPokemon" dans laquelle est stocké le nom du Pokémon sélectionné
-    fetch("https://pokebuildapi.fr/api/v1/pokemon/" + valeurPokemon)
+    fetch("./assets/php/getData.php", {
+        method: "POST",
+        body: valeurPokemon,
+        headers: {
+            "Content-Type": "application/text",
+    }
+        
+    })
     .then(response => response.json())
     .then(unPokemon => {
-
+        console.log("TOTO : ", unPokemon.name);
         document.querySelector("h2").textContent = "Voici les informations de " + valeurPokemon; // document.querySelector("h2").textContent = `Voici les informations de ${valeurokemon}`; // Alternative en condensé
         document.querySelector("img").setAttribute("src", unPokemon.image); //Affichage de l'image du Pokémon
         document.querySelector("#resultat").style.visibility = "visible"; // document.querySelector("#resultat").style.display = "block"; // Alternative
@@ -60,5 +65,14 @@ document.querySelector("input[type='submit']").addEventListener("click", (event)
             location.href = "details.html";
         })
     })
+}
+
+// Ajout d'un écouteur d'événement sur le bouton type "submit" Lorsque le bouton est cliqué, la fonction fléchée est appelée
+document.querySelector("#php").addEventListener("click", (event) => {
+    event.preventDefault(); //Empêchement du comportement par défaut du formulaire (rechargement de la page lors de la soumission du formulaire)
+    let valeurPokemon = document.querySelector("#select-pokemon").value; // Récupération de la valeur sélectionnée dans l'élément de sélection
+
+    // Déclenchement de la fonction
+    getViaPHP(valeurPokemon);
 
 })
